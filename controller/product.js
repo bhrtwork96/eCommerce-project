@@ -1,36 +1,37 @@
 const { Product } = require("../models")
+const {Op} = require("sequelize")
 
 async function createProduct(req, res) {
     const data = req.body;
-    
+
     if (data) {
         try {
             const dbData = await Product.create(data);
-            console.log(dbData)
-            res.send({msg:"Product created"})
+            
+            res.send({ msg: "Product created" })
         }
-        catch(err){
-            console.log(err)
-            res.send({msg:`err in creating Product${err}`})
+        catch (err) {
+            
+            res.status(500).send({ msg: `err in creating Product:- ${err}` })
         }
     }
-    else{
-        res.send({msg:'Product data not avilable'})
+    else {
+        res.status(400).send({ msg: 'Product data not avilable' })
     }
 }
 
 async function getProduct(req, res) {
-        try {
-            const dbData = await Product.findAll();
-            console.log(dbData)
-            res.send(dbData)
-        }
-        catch(err){
-            console.log(err)
-            res.send({msg:`err in creating Product${err}`})
-        }
-    
-    
+    try {
+        const dbData = await Product.findAll();
+        
+        res.send(dbData)
+    }
+    catch (err) {
+        
+        res.status(500).send({ msg: `err in creating Product${err}` })
+    }
+
+
 }
 
 async function deleteProduct(req, res) {
@@ -42,11 +43,11 @@ async function deleteProduct(req, res) {
             }
         });
         console.log(dbData)
-        res.send({msg:"Product deleted"})
+        res.send({ msg: "Product deleted" })
     }
-    catch(err){
-        console.log(err)
-        res.send({msg:`err in creating Product${err}`})
+    catch (err) {
+        
+        res.status(500).send({ msg: `err in creating Product${err}` })
     }
 
 
@@ -60,12 +61,12 @@ async function getOneProduct(req, res) {
                 id: param.id
             }
         });
-        console.log(dbData)
+        
         res.send(dbData)
     }
-    catch(err){
-        console.log(err)
-        res.send({msg:`err in creating Product${err}`})
+    catch (err) {
+       
+        res.status(500).send({ msg: `err in creating Product${err}` })
     }
 
 
@@ -75,17 +76,89 @@ async function updateProduct(req, res) {
     const data = req.body;
     const param = req.params;
     try {
-        const dbData = await Product.update(data,{
+        const dbData = await Product.update(data, {
             where: {
                 id: param.id
             }
         });
-        console.log(dbData)
-        res.send({msg:"Prouct updated"})
+        
+        res.send({ msg: "Prouct updated" })
     }
-    catch(err){
-        console.log(err)
-        res.send({msg:`err in creating Product${err}`})
+    catch (err) {
+        
+        res.status(500).send({ msg: `err in creating Product${err}` })
+    }
+
+
+}
+
+async function filterProduct(req, res) {
+    // filter for category
+    const CatId = req.query.CategoryId // ?CategoryId=3
+    if (CatId) {
+
+        const filterData = await Product.findAll(
+            {
+                where: {
+                    CategoryId: CatId
+                }
+            })
+        res.send(filterData);
+        return;
+    }
+
+    // filter for productname
+    const name = req.query.name // ?name=
+    if (name) {
+
+        const filterData = await Product.findAll(
+            {
+                where: {
+                    name: name
+                }
+            })
+        res.send(filterData);
+        return;
+    }
+
+    // filter cost
+    const minCost = req.query.minCost;
+    const maxCost = req.query.maxCost;
+
+    if(minCost&&maxCost){
+        const costData = await Product.findAll({
+            where:{
+                cost:{
+                    [Op.gte]:minCost,
+                    [Op.lte]:maxCost
+                }
+            }
+        })
+        res.send(costData)
+    }
+    else if(minCost){
+        const costData = await Product.findAll({
+            where:{
+                cost:{
+                    [Op.gte]:minCost
+                }
+            }
+        })
+        res.send(costData)
+    }
+    else if(maxCost){
+        const costData = await Product.findAll({
+            where:{
+                cost:{
+                    [Op.lte]:maxCost
+                }
+            }
+        })
+        res.send(costData)
+    }
+    else{
+        const costData = await Product.findAll()
+        res.send(costData)
     }
 
 
@@ -93,5 +166,4 @@ async function updateProduct(req, res) {
 
 
 
-
-module.exports ={createProduct,getProduct, deleteProduct, getOneProduct, updateProduct}
+module.exports = { createProduct, getProduct, deleteProduct, getOneProduct, updateProduct, filterProduct }

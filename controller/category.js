@@ -1,22 +1,16 @@
 const { Categories } = require('../models')
 
+
 async function createCatagry(req, res){
 	const data = req.body;
-    
-
-	if(!data.name){
-		res.status(400).send({msg: 'name is mandatory'})
-	}
-
-	const name = data.name;
-	const description = data.description;
+	// const name = data.name;
+	// const description = data.description;
 
 	try{
-		const result = await Categories.create({name, description})
-		console.log('result', result);
+		const result = await Categories.create(data)
+		
 		res.send({msg : 'Category has been created'})
 	}catch(err){
-		console.log('err in creation of categories', err)
 		res.status(500).send({msg : 'Internal server error'})
 	}
 	
@@ -26,7 +20,7 @@ async function getCatagory(req, res){
 
 	try{
 		const result = await Categories.findAll()
-		console.log('result', result);
+		
 		res.send(result)
 	}catch(err){
 		console.log('err in creation of categories', err)
@@ -43,12 +37,12 @@ async function deleteCatagory(req, res) {
                 id: param.id
             }
         });
-        console.log(dbData)
+        
         res.send({msg:"Cateogory deleted"})
     }
     catch(err){
-        console.log(err)
-        res.send({msg:`err in creating Category${err}`})
+       
+        res.status(500).send({msg:`err in creating Category${err}`})
     }
 
 
@@ -62,12 +56,12 @@ async function getOneCategory(req, res) {
                 id: param.id
             }
         });
-        console.log(dbData)
+       
         res.send(dbData)
     }
     catch(err){
-        console.log(err)
-        res.send({msg:`err in creating Category${err}`})
+        
+        res.status(500).send({msg:`err in creating Category${err}`})
     }
 
 
@@ -82,12 +76,12 @@ async function updateCatagory(req, res) {
                 id: param.id
             }
         });
-        console.log(dbData)
+        
         res.send({msg:"Catagory updated"})
     }
     catch(err){
-        console.log(err)
-        res.send({msg:`err in creating Catagory${err}`})
+       
+        res.status(500).send({msg:`err in creating Catagory${err}`})
     }
 
 
