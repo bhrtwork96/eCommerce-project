@@ -2,6 +2,7 @@ const { Cart, Product } = require("../models")
 const jwt = require('jsonwebtoken')
 
 
+
 const updateCart = async (req, res) => {
     const cartId = req.params.id;
     const data = req.body;
