@@ -8,7 +8,7 @@ async function tokenVerify(req, res, next) {
 
     if (token) {
         try {
-            const result = await jwt.verify(token, process.env.SECRATE_KEY)
+            const result = await jwt.verify(token, "AWaL!#n7f2lwZ#LN^CRV34gXt2Pk&No7")
             if (result) {
                 next()
             }
@@ -28,7 +28,7 @@ async function isAdmin(req, res, next) {
     const token = req.headers['access-token'];
     if (token) {
         try {
-            const result = await jwt.verify(token, process.env.SECRATE_KEY)
+            const result = await jwt.verify(token, 'AWaL!#n7f2lwZ#LN^CRV34gXt2Pk&No7')
             if (result) {
                 try {
                     const user = await User.findOne({
