@@ -23,7 +23,7 @@ app.listen(ServerConfig.PORT, async () => {
 
 async function init() {
     try {
-        await sequelize.authenticate();
+        await sequelize.sync({alter:true});
 
 //     const defaultProducts = [
 // 		{
