@@ -1,6 +1,13 @@
-*creating modeles products*
+# E-Commerce API project in NodeJs
 
-npx sequelize model:generate  --name Product --attributes name:text,cost:integer,description:text,quantity:integer
+## APIs
+1. Authorization APIs - Login and Registor user and admin.
+
+2. CURD APIs for Product Category - Update,Delete and Create operations autohorize to Admin, use can view.
+
+3. CURD APIs for Product Details - Update,Delete and Create operations autohorize to Admin, user can view.
+
+4. CURD APIs for Cart - All accessed authonticate user and admin both.
 
 
 
