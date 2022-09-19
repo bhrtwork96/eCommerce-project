@@ -4,6 +4,7 @@ const {checkSingupCrediantial} = require('../middleware')
 
 const routes = express.Router();
 
+//routes for login and signup
 
 routes.post('/ecomm/api/v1/signup',[checkSingupCrediantial],signUp);
 routes.post('/ecomm/api/v1/signin',signIn)

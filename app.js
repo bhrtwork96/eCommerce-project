@@ -7,18 +7,18 @@ const {categoriesRoute, productRoute, authRoute, cartRoute} = require('./routes/
 
 
 const app = express();
-
-
 app.use(express.json())
 
+// Routes
 app.use(categoriesRoute)
 app.use(productRoute)
 app.use(authRoute)
 app.use(cartRoute)
 
+// server listen
 app.listen(ServerConfig.PORT, async () => {
     console.log(`App started on the port no: ${ServerConfig.PORT}`);
-    init()
+    init()// initialize of databse
 })
 
 async function init() {
