@@ -3,21 +3,22 @@ const ServerConfig = require('./config/config.server');
 const { Categories, Product, User, Role, sequelize } = require('./models');
 const role = require('./models/role');
 const user = require('./models/user');
-const {categoriesRoute, productRoute, authRoute} = require('./routes/index');
+const {categoriesRoute, productRoute, authRoute, cartRoute} = require('./routes/index');
 
 
 const app = express();
-
-
 app.use(express.json())
 
+// Routes
 app.use(categoriesRoute)
 app.use(productRoute)
 app.use(authRoute)
+app.use(cartRoute)
 
+// server listen
 app.listen(ServerConfig.PORT, async () => {
     console.log(`App started on the port no: ${ServerConfig.PORT}`);
-    init()
+    init()// initialize of databse
 })
 
 async function init() {
@@ -74,8 +75,8 @@ async function init() {
 // 		await Categories.bulkCreate(defaultCategories)
 // 		await Product.bulkCreate(defaultProducts)
 // 		await Role.bulkCreate(defaultRoles)
-//     }
-	}
+    }
+	
     catch(err){
         console.log(err)
     }

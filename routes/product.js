@@ -6,13 +6,13 @@ const routes = express.Router()
 // routes for category
 routes.post('/ecomm/api/v1/products',[productDataCheck,isAdmin],createProduct)
 
-routes.get('/ecomm/api/v1/products',[tokenVerify],getProduct)
+routes.get('/ecomm/api/v1/products',getProduct)
 
-routes.get('/ecomm/api/v1/products/filter',[tokenVerify],filterProduct)
+routes.get('/ecomm/api/v1/products/filter',filterProduct)
 
 routes.delete('/ecomm/api/v1/products/:id',[isAdmin], deleteProduct)
 
-routes.get('/ecomm/api/v1/products/:id',[tokenVerify],getOneProduct)
+routes.get('/ecomm/api/v1/products/:id',getOneProduct)
 
 routes.put('/ecomm/api/v1/products/:id',[isAdmin],updateProduct)
 

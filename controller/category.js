@@ -24,7 +24,7 @@ async function getCatagory(req, res){
 		res.send(result)
 	}catch(err){
 		console.log('err in creation of categories', err)
-		res.status(500).send({msg : 'Internal server error'})
+		res.status(500).send({msg : err})
 	}
 	
 }
